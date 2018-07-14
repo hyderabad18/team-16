@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>YFS</title>
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<style>
+		.flex-container {
+		  display: flex;
+		  flex-wrap: wrap;
+		  align-items: center;
+		  justify-content: center;
+		  background-color: DodgerBlue;
+		}
+
+		.flex-container > div {
+		  background-color: #f1f1f1;
+		  width: 200px;
+		  margin: 10px;
+		  text-align: center;
+		  height: 200px;
+		}
+
+		.button {
+		    background-color: #4CAF50;
+		    border: none;
+		    color: white;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    cursor: pointer;
+		    width:48%;
+		    height:100%;
+		}
+	</style>
+	<body style="padding:20px;" onload="fillContent()">
+		<div class="flex-container">
+			<div id="EventModel">
+				<br/>
+				<p id="EventName" style="font-size:24px;">Event Name</p> 
+ 				<div style="width:200px; height:20%;">
+					<div id="EventLocation" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Location</div>
+					<div id="EventTime" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Time</div>
+				</div>
+ 				<div style="width:200px; height:20%;">
+					<progress id="ProgressBar" value="22" max="100"></progress>
+				</div>
+ 				<div style="width:200px; height:20%;">
+					<button id="CheckInButton" class="button">Check In</button>
+					<button id="DropButton" class="button">Drop</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var events;
+		function fillContent() {
+			// getData(fillEvents);
+			fillEvents();
+		}
+
+		function getData() {
+			var xmlhttp = new XMLHttpRequest();
+	        xmlhttp.onreadystatechange = function() {
+	            if (this.readyState == 4 && this.status == 200) {
+	                events = this.responseText;
+	            }
+	        }
+	        xmlhttp.open("GET", "gethint.php?q=events_admin", true);
+	        xmlhttp.send();
+		}
+
+		function fillEvents() {
+                var eventsJSON = '{"events":[{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"47.5"},{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"85.5"}]}';
+                var eventsObjects = JSON.parse(eventsJSON);
+                var eventModel = document.getElementById("EventModel");
+                for(eventNo in eventsObjects.events) {
+                	var event = eventsObjects.events[eventNo];
+                	if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.progress == null)){
+                			eventModel.children[1].innerHTML = event.eventName;
+                			eventModel.children[2].children[0].innerHTML = event.eventLocation;
+                			eventModel.children[2].children[1].innerHTML = event.eventTime;
+                			var newEvent = eventModel.cloneNode(true);
+                			newEvent.style.display = "initial"
+                			eventModel.parentElement.appendChild(newEvent);
+                	}
+                }
+                eventModel.remove();
+		}
+	</script>
+</html>
