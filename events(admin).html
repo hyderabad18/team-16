@@ -49,16 +49,75 @@
 					<div id="Interested" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Interested:5</div>
 				</div>
  				<div style="width:200px; height:20%;">
-					<button id="ChooseButton" class="button">Choose</button>
+					<button id="ChooseButton" class="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
 					<button id="ExpandButton" class="button">Expand</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="ChooseModal" role="dialog">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 id="ModalEventName" class="modal-title">Event Name</h4>
+					</div>
+					<div class="modal-body">
+						<div style="width:100%;">
+							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
+							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
+						</div>
+						<br/>
+						<div style="width:100%;">
+							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px; font-weight:600;">Assigned Candidates</div>
+							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px; font-weight:600;">Interested Candidates</div>
+						</div>
+						<div style="width:100%; max-height:60vh;">
+							<div id="AssignedList" style="width:45%; display:inline-block; overflow-y:auto; max-height:60vh;">
+								<div id="AssignedData" data-selected="true" style="width:100%; padding-top:4px;" onclick="CancelAssigned(this)">
+									<div style="width:90%; display:inline-block; overflow-x:auto;">
+										<div id="AssignedName">John Doe</div>
+										<div id="AssignedEmail">jane.doe@gmail.com</div>
+									</div>
+									<div style="width:5%; display:inline-block;">
+										&times;
+										<br/><br/>
+									</div>
+								</div>
+							</div>
+							<div id="InterestedList" style="width:45%; display:inline-block; overflow-y:auto; max-height:60vh; margin-left:14px;">
+								<div id="InterestedData" data-selected="false" style="width:100%; display:block; padding-top:4px;" onclick="SelectInterested(this)">
+									<div style="width:90%; display:inline-block; overflow-x:auto;">
+										<div id="InterestedName">Jane Doe</div>
+										<div id="InterestedEmail">jane.doe@gmail.com</div>
+									</div>
+									<div style="width:5%; display:inline-block;">
+										&#10003;
+										<br/><br/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm()">Confirm</button>
+						<button type="button" class="btn btn-default" onclick="reset()">Reset</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript">
-		var events;
+		var assigned = [];
+		var interested = [];
+
+		var AssignedObjectsNow;
+		var InterestedObjectsNow;
+
 		function fillContent() {
-			getData(fillEvents);
+			// getData(fillEvents);
+			fillEvents();
+			fillInterestedList();
+			fillAssignedList();
 		}
 
 		function getData() {
@@ -85,11 +144,110 @@
                 			eventModel.children[3].children[0].innerHTML = event.assigned;
                 			eventModel.children[3].children[1].innerHTML = event.interested;
                 			var newEvent = eventModel.cloneNode(true);
-                			newEvent.style.display = "initial"
+                			newEvent.style.display = "initial";
                 			eventModel.parentElement.appendChild(newEvent);
                 	}
                 }
                 eventModel.remove();
+		}
+
+		function fillInterestedList() {
+			 var volunteersJSON = '{"volunteers":[{"name":"Jane Doe","email":"jane.doe@gmail.com"},{"name":"Richard Roe","email":"richard.roe@gmail.com"}]}';
+			 var volunteersObjects = JSON.parse(volunteersJSON);
+			 var interestedModel = document.getElementById("InterestedData");
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		interestedModel.children[0].children[0].innerHTML = volunteer.name;
+			 		interestedModel.children[0].children[1].innerHTML = volunteer.email;
+			 		var newVolunteer = interestedModel.cloneNode(true);
+			 		newVolunteer.setAttribute("id", "InterestedData"+volunteerNo);
+			 		newVolunteer.style.display = "initial";
+			 		interestedModel.parentElement.appendChild(newVolunteer);
+			 	}
+			 }
+			 interestedModel.remove();
+			 InterestedObjectsNow = volunteersObjects;
+		}
+
+		function fillAssignedList() {
+			var volunteersJSON = '{"volunteers":[{"name":"John Smith","email":"john.smith@gmail.com"},{"name":"Jane Roe","email":"jane.roe@gmail.com"}]}';
+			 var volunteersObjects = JSON.parse(volunteersJSON);
+			 var assignedModel = document.getElementById("AssignedData");
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		assigned.push(volunteer);
+			 		assignedModel.children[0].children[0].innerHTML = volunteer.name;
+			 		assignedModel.children[0].children[1].innerHTML = volunteer.email;
+			 		var newVolunteer = assignedModel.cloneNode(true);
+			 		newVolunteer.setAttribute("id", "AssignedData"+volunteerNo);
+			 		newVolunteer.style.display = "initial";
+			 		assignedModel.parentElement.appendChild(newVolunteer);
+			 	}
+			 }
+			 assignedModel.remove();
+			 AssignedObjectsNow = volunteersObjects;
+		}
+
+		function CancelAssigned(element) {
+			if(element.getAttribute("data-selected") == "true") {
+				element.style.color = "#d00";
+				element.setAttribute("data-selected", "false");
+			}
+			else {
+				element.style.color = "#000000";
+				element.setAttribute("data-selected", "true");
+			}
+		}
+
+		function SelectInterested(element) {
+			if(element.getAttribute("data-selected") == "true") {
+				element.style.color = "#000000";
+				element.setAttribute("data-selected", "false");
+			}
+			else {
+				element.style.color = "#0d0";
+				element.setAttribute("data-selected", "true");
+			}
+		}
+
+		function confirm() {
+			var AssignedList = document.getElementById('AssignedList');
+			var InterestedList = document.getElementById('InterestedList');
+			for(assignedNo in AssignedList.children-1) {
+				var assigned = AssignedList.children[assignedNo];
+				if(assigned.getAttribute('data-selected') == "true")
+					assigned.push(AssignedObjectsNow[assignedNo]);
+				else
+					interested.push(AssignedObjectsNow[assignedNo]);
+			}
+			for(interestedNo in InterestedList.children-1) {
+				var interested = InterestedList.children[interestedNo];
+				if(interested.getAttribute('data-selected') == "false")
+					interested.push(InterestedObjectsNow[interestedNo]);
+				else
+					assigned.push(InterestedObjectsNow[interestedNo]);
+			}
+		}
+
+		function reset() {
+			var AssignedList = document.getElementById('AssignedList');
+			var InterestedList = document.getElementById('InterestedList');
+			for(assignedNo = 0; assignedNo < AssignedList.children.length; assignedNo++) {
+				var object = document.getElementById("AssignedData"+assignedNo);
+				if(object.dataset.selected == "false") {
+					object.style.color = "#000";
+					object.setAttribute("data-selected", "true");	
+				}
+			}
+			for(interestedNo = 0; interestedNo < InterestedList.children.length; interestedNo++) {
+				var object = document.getElementById("InterestedData"+interestedNo);
+				if(object.dataset.selected == "true") {
+					object.style.color = "#000"
+					object.setAttribute("data-selected", "false");
+				}
+			}
 		}
 	</script>
 </html>
