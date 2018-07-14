@@ -1,6 +1,6 @@
 <?php 
 include('connection.php')
-
+$conn=mysqli_select_db($db,'event_vol_map');
 $confirm="CONFIRM";
 $queue="QUEUE";
 $rejected="REJECTED";
@@ -14,6 +14,13 @@ if (isset($_POST[''])) {
   $status= mysqli_real_escape_string($db, $_POST['status']);
   $tid= mysqli_real_escape_string($db, $_POST['tid']);
   mysqli_query($db,$query);
+  //inserting in to datbase
+  	$query = "INSERT INTO event_vol_map
+  			  VALUES('$	EName', '$ Eid', '$Edescription ','$Epincode')";
+	mysqli_query($db,$query);
+//selecting from database
+$query1="select * from event_vol_map ";
+mysqli_query($db,$query1);
   ?>
   
   
