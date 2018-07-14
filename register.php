@@ -33,13 +33,13 @@
       <input type="Number" name="phno">
     </div>
 	<div class="input-group">
+      <label>Pin Code</label>
+      <input type="Number" name="pin">
+    </div>
+	<div class="input-group">
       <label>Preffered Time</label>
       <input type="checkbox" name="week" value="Weekdays"> WeekDays<br>
   <input type="checkbox" name="week" value="weekends" checked="checked"> WeekEnds<br>
-    </div>
-<div class="input-group">
-      <label>Pincode</label>
-      <input type="Number" name="pincode">
     </div>
     <div class="input-group">
       <button type="submit" class="btn" name="reg_user">Register</button>
