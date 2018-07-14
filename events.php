@@ -15,4 +15,5 @@ if (isset($_POST[''])) {
 //selecting from database
 $query1="select * from events";
 mysqli_query($db,$query1);
+
 ?>
