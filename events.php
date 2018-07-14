@@ -1,8 +1,7 @@
 <?php 
-include('connection.php')
-$conn=mysqli_select_db($db,'events');
+include('connection.php');
 // 
-if (isset($_POST[''])) {
+/*if (isset($_POST[''])) {
   // receive all input values from the form
   $ename = mysqli_real_escape_string($db, $_POST['EName']);
   $eid = mysqli_real_escape_string($db, $_POST['Eid']);
@@ -14,6 +13,7 @@ if (isset($_POST[''])) {
   			  VALUES('$EName', '$Eid', '$Edescription','$Epincode ')";
 	mysqli_query($db,$query);
 //selecting from database
+*/
 $query1="select * from events";
 $result=mysqli_query($db,$query1);
 $json_array=array();
@@ -23,6 +23,6 @@ while($row=mysqli_fetch_assoc($result))
 }
 echo json_encode($json_array);
 
-mysqli_query($db,$query1);
+
 
 ?>
