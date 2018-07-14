@@ -36,6 +36,7 @@
 		}
 	</style>
 	<body style="padding:20px;" onload="fillContent()">
+		<p id="VolunteerID" style="display:none;"></p>
 		<div class="flex-container">
 			<div id="EventModel">
 				<br/>
@@ -44,15 +45,24 @@
 					<div id="EventLocation" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Location</div>
 					<div id="EventTime" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Time</div>
 				</div>
+				<p id="EventID" style="display:none;"></p>
  				<div style="width:200px; height:20%;">
 					<progress id="ProgressBar" value="22" max="100"></progress>
 				</div>
  				<div style="width:200px; height:20%;">
-					<button id="CheckInButton" class="button">Check In</button>
-					<button id="DropButton" class="button">Drop</button>
+					<button id="CheckInButton" class="button" onclick="checkin(document.getElementById('EventID').innerHTML, document.getElementById("VolunteerID").innerHTML)">Check In</button>
+					<button id="DropButton" class="button" onclick="drop(document.getElementById('EventID').innerHTML,document.getElementById("VolunteerID").innerHTMLDrop</button>
 				</div>
 			</div>
 		</div>
+		<form id="CheckinForm" method="post" action="">
+			<input type="text" id="CheckinEventID" name="eventID" value=""/>
+			<input type="text" id="CheckinVolunteerID" name="volunteerID" value=""/>
+		</form>
+		<form id="DropForm" method="post" action="">
+			<input type="text" id="DropEventID" name="eventID" value=""/>
+			<input type="text" id="DropVolunteerID" name="volunteerID" value=""/>
+		</form>
 	</body>
 	<script type="text/javascript">
 		var events;
@@ -62,6 +72,7 @@
 		}
 
 		function getData() {
+			// Also get volunteer ID
 			var xmlhttp = new XMLHttpRequest();
 	        xmlhttp.onreadystatechange = function() {
 	            if (this.readyState == 4 && this.status == 200) {
@@ -70,10 +81,11 @@
 	        }
 	        xmlhttp.open("GET", "gethint.php?q=events_admin", true);
 	        xmlhttp.send();
+	        document.getElementById("VolunteerID").innerHTML = VolunteerID;
 		}
 
 		function fillEvents() {
-                var eventsJSON = '{"events":[{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"47.5"},{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"85.5"}]}';
+                var eventsJSON = '{"events":[{"eventID":"9876543210", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"47.5"},{"eventID":"9875678909", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"85.5"}]}';
                 var eventsObjects = JSON.parse(eventsJSON);
                 var eventModel = document.getElementById("EventModel");
                 for(eventNo in eventsObjects.events) {
@@ -82,12 +94,27 @@
                 			eventModel.children[1].innerHTML = event.eventName;
                 			eventModel.children[2].children[0].innerHTML = event.eventLocation;
                 			eventModel.children[2].children[1].innerHTML = event.eventTime;
+                			eventModel.children[3].innerHTML = event.eventID;
                 			var newEvent = eventModel.cloneNode(true);
                 			newEvent.style.display = "initial"
                 			eventModel.parentElement.appendChild(newEvent);
                 	}
                 }
                 eventModel.remove();
+		}
+
+		function checkin(EventID, VolunteerID) {
+			checkinForm = document.getElementById("CheckinForm");
+			checkinForm.children[0].setAttribute("value", EventID);
+			checkinForm.children[1].setAttribute("value", VolunteerID);
+			checkinForm.submit();
+		}
+
+		function drop(EventID, VolunteerID) {
+			dropForm = document.getElementById("DropForm");
+			dropForm.children[0].setAttribute("value", EventID);
+			dropForm.children[1].setAttribute("value", VolunteerID);
+			dropForm.submit();
 		}
 	</script>
 </html>

@@ -12,7 +12,6 @@
 		  flex-wrap: wrap;
 		  align-items: center;
 		  justify-content: center;
-		  background-color: DodgerBlue;
 		}
 
 		.flex-container > div {
@@ -36,6 +35,9 @@
 		}
 	</style>
 	<body style="padding:20px;" onload="fillContent()">
+		<h2 style="padding-left:4%; display:inline-block;">Open Events</h2>
+		<button id="CheckInButton" class="button" style="height:50px; width:170px; float:right; border-radius:6px; margin-right:2%; margin-top:6px;">Create New Event</button>
+		<hr/>
 		<div class="flex-container">
 			<div id="EventModel">
 				<br/>
@@ -49,8 +51,8 @@
 					<div id="Interested" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Interested:5</div>
 				</div>
  				<div style="width:200px; height:20%;">
-					<button id="ChooseButton" class="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
-					<button id="ExpandButton" class="button">Expand</button>
+					<button id="ChooseButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
+					<button id="ExpandButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ExpandModal">Expand</button>
 				</div>
 			</div>
 		</div>
@@ -105,6 +107,41 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="ExpandModal" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 id="ModalEventName" class="modal-title">Event Name</h4>
+					</div>
+					<div class="modal-body">
+						<div style="width:100%;">
+							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
+							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
+						</div>
+						<br/>
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Assigned Volunteers
+							<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href="#">Jane Doe | jane.doe@gmail.com</a></li>
+							</ul>
+						</div>
+						<br/><br/>
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Interested Volunteers
+							<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href="#">Richard Roe | richard.roe@gmail.com</a></li>
+							</ul>
+						</div>
+						<br/><br/>
+						<progress id="ProgressBar" value="22" max="100"></progress>
+						<br/><br/>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript">
 		var assigned = [];
@@ -141,9 +178,10 @@
                 			eventModel.children[1].innerHTML = event.eventName;
                 			eventModel.children[2].children[0].innerHTML = event.eventLocation;
                 			eventModel.children[2].children[1].innerHTML = event.eventTime;
-                			eventModel.children[3].children[0].innerHTML = event.assigned;
-                			eventModel.children[3].children[1].innerHTML = event.interested;
+                			eventModel.children[3].children[0].innerHTML = "Assigned: " + event.assigned;
+                			eventModel.children[3].children[1].innerHTML = "Interested: " + event.interested;
                 			var newEvent = eventModel.cloneNode(true);
+                			newEvent.setAttribute("id", "Event"+);
                 			newEvent.style.display = "initial";
                 			eventModel.parentElement.appendChild(newEvent);
                 	}
