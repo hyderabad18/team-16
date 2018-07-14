@@ -1,5 +1,5 @@
 <?php 
-include('connection.php')
+include('connection.php');
 
 // REGISTER USER
 if (isset($_POST[''])) {
