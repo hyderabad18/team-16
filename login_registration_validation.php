@@ -1,13 +1,6 @@
-<?php
-session_start();
+<?php 
+include('connection.php')
 
-// initializing variables
-//$errors = array(); 
-
-// connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'youthforseva');
-if($db)
-	echo "connected";
 // REGISTER USER
 if (isset($_POST[''])) {
   // receive all input values from the form
@@ -17,6 +10,14 @@ if (isset($_POST[''])) {
   $phonenumber = mysqli_real_escape_string($db, $_POST['Phonenumber']);
   $ptime = mysqli_real_escape_string($db, $_POST['	Preferredtime']);
   $pincode = mysqli_real_escape_string($db, $_POST['Pincode']);
-	
+//Login User
+
+if (isset($_POST[''])) {
+  $emailid= mysqli_real_escape_string($db, $_POST['Emailid']);
+  $password = mysqli_real_escape_string($db, $_POST['Password']);
+  
 }
+
+
+
 ?>
