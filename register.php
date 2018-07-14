@@ -10,7 +10,7 @@
     <h2>Register</h2>
   </div>
   
-  <form method="post" action="register.php">
+  <form method="post" action="login_registration_validation.php">
     <?php include('errors.php'); ?>
     <div class="input-group">
       <label>Username</label>
@@ -31,10 +31,6 @@
 	<div class="input-group">
       <label>Phone Number</label>
       <input type="Number" name="phno">
-    </div>
-	<div class="input-group">
-      <label>Pin Code</label>
-      <input type="Number" name="pin">
     </div>
 	<div class="input-group">
       <label>Preffered Time</label>
