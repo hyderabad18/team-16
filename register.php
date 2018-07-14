@@ -37,6 +37,10 @@
       <input type="checkbox" name="week" value="Weekdays"> WeekDays<br>
   <input type="checkbox" name="week" value="weekends" checked="checked"> WeekEnds<br>
     </div>
+<div class="input-group">
+      <label>Pincode</label>
+      <input type="Number" name="pincode">
+    </div>
     <div class="input-group">
       <button type="submit" class="btn" name="reg_user">Register</button>
     </div>
