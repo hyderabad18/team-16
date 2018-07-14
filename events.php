@@ -1,5 +1,7 @@
 <?php 
 include('connection.php');
+header("Access-Control-Allow-Origin: *");
+
 // 
 /*if (isset($_POST[''])) {
   // receive all input values from the form
