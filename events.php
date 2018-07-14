@@ -8,12 +8,21 @@ if (isset($_POST[''])) {
   $eid = mysqli_real_escape_string($db, $_POST['Eid']);
   $edesc= mysqli_real_escape_string($db, $_POST['Edescription']);
   $epincode = mysqli_real_escape_string($db, $_POST['Epincode']);
+  
 //inserting in to datbase
   	$query = "INSERT INTO events
   			  VALUES('$EName', '$Eid', '$Edescription','$Epincode ')";
 	mysqli_query($db,$query);
 //selecting from database
 $query1="select * from events";
+$result=mysqli_query($db,$query1);
+$json_array=array();
+while($row=mysqli_fetch_assoc($result))
+{
+	$json_array[]=$row;
+}
+echo json_encode($json_array);
+
 mysqli_query($db,$query1);
 
 ?>
