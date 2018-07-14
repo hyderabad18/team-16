@@ -1,7 +1,9 @@
 <?php 
 include('connection.php')
 
-
+$confirm="CONFIRM";
+$queue="QUEUE";
+$rejected="REJECTED";
 if (isset($_POST[''])) {
   // receive all input values from the form
   $vid = mysqli_real_escape_string($db, $_POST['Vid']);
@@ -11,4 +13,7 @@ if (isset($_POST[''])) {
   $eventcompleted= mysqli_real_escape_string($db, $_POST['Eventcompleted']);
   $status= mysqli_real_escape_string($db, $_POST['status']);
   $tid= mysqli_real_escape_string($db, $_POST['tid']);
+  mysqli_query($db,$query);
   ?>
+  
+  

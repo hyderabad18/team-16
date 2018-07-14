@@ -5,7 +5,9 @@ session_start();
 //$errors = array(); 
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '','youthforseva');
+
+$db = mysqli_connect('localhost', 'root', '');
+
 if($db)
 {echo "connected";
 

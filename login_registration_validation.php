@@ -17,6 +17,10 @@ if (isset($_POST[''])) {
   $password = mysqli_real_escape_string($db, $_POST['Password']);
   
 }
+//inserting in to datbase
+  	$query = "INSERT INTO users (username, email, password) 
+  			  VALUES('$username', '$email', '$password')";
+
 
 
 
