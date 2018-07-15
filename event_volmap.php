@@ -13,7 +13,7 @@ if (isset($_POST[''])) {
   			  VALUES('$vid','$eid', '$Tid')";
 	mysqli_query($db,$query);
 //selecting from database
-$query1="select * from event_vol_map ";
+$query1="select * from events e,event_vol_map e1 where e.Eid=e1.Eid";
 $result=mysqli_query($db,$query1);
 $json_array=array();
 while($row=mysqli_fetch_assoc($result))
