@@ -10,11 +10,12 @@ if (isset($_POST[''])) {
   $edesc= mysqli_real_escape_string($db, $_POST['Edescription']);
   $epincode = mysqli_real_escape_string($db, $_POST['Epincode']);
   $totalcheckins=mysqli_real_escape_string($db, $_POST['Totalcheckins']);
+  $currcheckins=mysqli_real_escape_string($db, $_POST['Currentcheckins']);
   
   
 //inserting in to datbase
   	$query = "INSERT INTO events
-  			  VALUES('$EName', '$Eid', '$Edescription','$Epincode')";
+  			  VALUES('$ename', '$eid', '$edesc','$epincode','$totalcheckins','currcheckins')";
 	mysqli_query($db,$query);
 //selecting from database
 */
