@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8"><!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,9 +20,39 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <style>
+		.flex-container {
+		  display: flex;
+		  flex-wrap: wrap;
+		  align-items: center;
+		  justify-content: center;
+		  background-color: DodgerBlue;
+		}
+
+		.flex-container > div {
+		  background-color: #f1f1f1;
+		  width: 200px;
+		  margin: 10px;
+		  text-align: center;
+		  height: 200px;
+		}
+
+		.button {
+		    background-color: #4CAF50;
+		    border: none;
+		    color: white;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    cursor: pointer;
+		    width:48%;
+		    height:100%;
+		}
+	</style>
+  
 </head>
 
-<body class="fixed-nav bg-success" style="background-color: #ffffff;" id="page-top">
+<body class="fixed-nav bg-success" style="background-color: #ffffff;" id="page-top" onload="fillContent()">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top" id="mainNav">
 	<img src="download.jpg" class="img-responsive" alt="" height="3%" width="3%">&nbsp;&nbsp;&nbsp;
@@ -36,7 +70,7 @@
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
-       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Events">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Events">
           <a class="nav-link" href="integrationevents.html" >
             <i class="fa fa-users"></i>
             <span class="nav-link-text">Events</span>
@@ -44,12 +78,16 @@
          
         </li>
 		
+		
+		
 		<!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="indexnew.html">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>-->
+		
+		
 		
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Choose">
           <a class="nav-link" href="adminevents.html" >
@@ -221,133 +259,239 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="admin layout.html">Home</a>
+          <a href="index.html">Home</a>
         </li>
         <li class="breadcrumb-item active"></li>
       </ol>
       <!-- Icon Cards-->
-      <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-primary o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-comments"></i>
-              </div>
-              <div class="mr-5">26 New Messages!</div>
-            </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-warning o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-list"></i>
-              </div>
-              <div class="mr-5">11 New Tasks!</div>
-            </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-success o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-shopping-cart"></i>
-              </div>
-              <div class="mr-5">123 New Orders!</div>
-            </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-danger o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-support"></i>
-              </div>
-              <div class="mr-5">13 New Tickets!</div>
-            </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Area Chart Example-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> Area Chart Example</div>
-        <div class="card-body">
-          <canvas id="myAreaChart" width="100%" height="30"></canvas>
-        </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-          <!-- Example Bar Chart Card-->
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-8 my-auto">
-                  <canvas id="myBarChart" width="100" height="68"></canvas>
-                </div>
-                <div class="col-sm-4 text-center my-auto">
-                  <div class="h4 mb-0 text-primary">$34,693</div>
-                  <div class="small text-muted">YTD Revenue</div>
-                  <hr>
-                  <div class="h4 mb-0 text-warning">$18,474</div>
-                  <div class="small text-muted">YTD Expenses</div>
-                  <hr>
-                  <div class="h4 mb-0 text-success">$16,219</div>
-                  <div class="small text-muted">YTD Margin</div>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-          </div>
+     
+
+	 
+	 
+	 <div class="flex-container">
+			<div id="EventModel">
+				<br/>
+				<p id="EventName" style="font-size:24px;">Event Name</p> 
+ 				<div style="width:200px; height:20%;">
+					<div id="EventLocation" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Location</div>
+					<div id="EventTime" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Time</div>
+				</div>
+ 				<div style="width:200px; height:20%;">
+					<div id="Assigned" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Assigned:2</div>
+					<div id="Interested" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Interested:5</div>
+				</div>
+ 				<div style="width:200px; height:20%;">
+					<button id="ChooseButton" class="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
+					<button id="ExpandButton" class="button">Expand</button>
+				</div>
+			</div>
 		</div>
-        <div class="col-lg-4">
-          <!-- Example Pie Chart Card-->
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
-            <div class="card-body">
-              <canvas id="myPieChart" width="100%" height="100"></canvas>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-          </div>
-        </div>  
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright © Your Website 2018</small>
-        </div>
-      </div>
-    </footer>
+		<div class="modal fade" id="ChooseModal" role="dialog">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 id="ModalEventName" class="modal-title">Event Name</h4>
+					</div>
+					<div class="modal-body">
+						<div style="width:100%;">
+							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
+							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
+						</div>
+						<br/>
+						<div style="width:100%;">
+							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px; font-weight:600;">Assigned Candidates</div>
+							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px; font-weight:600;">Interested Candidates</div>
+						</div>
+						<div style="width:100%; max-height:60vh;">
+							<div id="AssignedList" style="width:45%; display:inline-block; overflow-y:auto; max-height:60vh;">
+								<div id="AssignedData" data-selected="true" style="width:100%; padding-top:4px;" onclick="CancelAssigned(this)">
+									<div style="width:90%; display:inline-block; overflow-x:auto;">
+										<div id="AssignedName">John Doe</div>
+										<div id="AssignedEmail">jane.doe@gmail.com</div>
+									</div>
+									<div style="width:5%; display:inline-block;">
+										&times;
+										<br/><br/>
+									</div>
+								</div>
+							</div>
+							<div id="InterestedList" style="width:45%; display:inline-block; overflow-y:auto; max-height:60vh; margin-left:14px;">
+								<div id="InterestedData" data-selected="false" style="width:100%; display:block; padding-top:4px;" onclick="SelectInterested(this)">
+									<div style="width:90%; display:inline-block; overflow-x:auto;">
+										<div id="InterestedName">Jane Doe</div>
+										<div id="InterestedEmail">jane.doe@gmail.com</div>
+									</div>
+									<div style="width:5%; display:inline-block;">
+										&#10003;
+										<br/><br/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm()">Confirm</button>
+						<button type="button" class="btn btn-default" onclick="reset()">Reset</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var assigned = [];
+		var interested = [];
+
+		var AssignedObjectsNow;
+		var InterestedObjectsNow;
+
+		function fillContent() {
+
+			getData();
+
+			// getData(fillEvents);
+			fillEvents();
+			fillInterestedList();
+			fillAssignedList();
+
+		}
+
+		function getData() {
+			var xmlhttp = new XMLHttpRequest();
+	        xmlhttp.onreadystatechange = function() {
+	            if (this.readyState == 4 && this.status == 200) {
+	                console.log(this.responseText);
+	            }
+	        }
+	        xmlhttp.open("GET", "events.php", true);
+	        xmlhttp.send();
+			
+		}
+
+		function fillEvents() {
+                var eventsJSON = '{"events":[{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"},{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"}]}';
+                var eventsObjects = JSON.parse(eventsJSON);
+                var eventModel = document.getElementById("EventModel");
+                for(eventNo in eventsObjects.events) {
+                	var event = eventsObjects.events[eventNo];
+                	if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.assigned == null || event.interested == null)){
+                			eventModel.children[1].innerHTML = event.eventName;
+                			eventModel.children[2].children[0].innerHTML = event.eventLocation;
+                			eventModel.children[2].children[1].innerHTML = event.eventTime;
+                			eventModel.children[3].children[0].innerHTML = event.assigned;
+                			eventModel.children[3].children[1].innerHTML = event.interested;
+                			var newEvent = eventModel.cloneNode(true);
+                			newEvent.style.display = "initial";
+                			eventModel.parentElement.appendChild(newEvent);
+                	}
+                }
+                eventModel.remove();
+		}
+
+		function fillInterestedList() {
+			 var volunteersJSON = '{"volunteers":[{"name":"Jane Doe","email":"jane.doe@gmail.com"},{"name":"Richard Roe","email":"richard.roe@gmail.com"}]}';
+			 var volunteersObjects = JSON.parse(volunteersJSON);
+			 var interestedModel = document.getElementById("InterestedData");
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		interestedModel.children[0].children[0].innerHTML = volunteer.name;
+			 		interestedModel.children[0].children[1].innerHTML = volunteer.email;
+			 		var newVolunteer = interestedModel.cloneNode(true);
+			 		newVolunteer.setAttribute("id", "InterestedData"+volunteerNo);
+			 		newVolunteer.style.display = "initial";
+			 		interestedModel.parentElement.appendChild(newVolunteer);
+			 	}
+			 }
+			 interestedModel.remove();
+			 InterestedObjectsNow = volunteersObjects;
+		}
+
+		function fillAssignedList() {
+			var volunteersJSON = '{"volunteers":[{"name":"John Smith","email":"john.smith@gmail.com"},{"name":"Jane Roe","email":"jane.roe@gmail.com"}]}';
+			 var volunteersObjects = JSON.parse(volunteersJSON);
+			 var assignedModel = document.getElementById("AssignedData");
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		assigned.push(volunteer);
+			 		assignedModel.children[0].children[0].innerHTML = volunteer.name;
+			 		assignedModel.children[0].children[1].innerHTML = volunteer.email;
+			 		var newVolunteer = assignedModel.cloneNode(true);
+			 		newVolunteer.setAttribute("id", "AssignedData"+volunteerNo);
+			 		newVolunteer.style.display = "initial";
+			 		assignedModel.parentElement.appendChild(newVolunteer);
+			 	}
+			 }
+			 assignedModel.remove();
+			 AssignedObjectsNow = volunteersObjects;
+		}
+
+		function CancelAssigned(element) {
+			if(element.getAttribute("data-selected") == "true") {
+				element.style.color = "#d00";
+				element.setAttribute("data-selected", "false");
+			}
+			else {
+				element.style.color = "#000000";
+				element.setAttribute("data-selected", "true");
+			}
+		}
+
+		function SelectInterested(element) {
+			if(element.getAttribute("data-selected") == "true") {
+				element.style.color = "#000000";
+				element.setAttribute("data-selected", "false");
+			}
+			else {
+				element.style.color = "#0d0";
+				element.setAttribute("data-selected", "true");
+			}
+		}
+
+		function confirm() {
+			var AssignedList = document.getElementById('AssignedList');
+			var InterestedList = document.getElementById('InterestedList');
+			for(assignedNo in AssignedList.children-1) {
+				var assigned = AssignedList.children[assignedNo];
+				if(assigned.getAttribute('data-selected') == "true")
+					assigned.push(AssignedObjectsNow[assignedNo]);
+				else
+					interested.push(AssignedObjectsNow[assignedNo]);
+			}
+			for(interestedNo in InterestedList.children-1) {
+				var interested = InterestedList.children[interestedNo];
+				if(interested.getAttribute('data-selected') == "false")
+					interested.push(InterestedObjectsNow[interestedNo]);
+				else
+					assigned.push(InterestedObjectsNow[interestedNo]);
+			}
+		}
+
+		function reset() {
+			var AssignedList = document.getElementById('AssignedList');
+			var InterestedList = document.getElementById('InterestedList');
+			for(assignedNo = 0; assignedNo < AssignedList.children.length; assignedNo++) {
+				var object = document.getElementById("AssignedData"+assignedNo);
+				if(object.dataset.selected == "false") {
+					object.style.color = "#000";
+					object.setAttribute("data-selected", "true");	
+				}
+			}
+			for(interestedNo = 0; interestedNo < InterestedList.children.length; interestedNo++) {
+				var object = document.getElementById("InterestedData"+interestedNo);
+				if(object.dataset.selected == "true") {
+					object.style.color = "#000"
+					object.setAttribute("data-selected", "false");
+				}
+			}
+		}
+	</script>
+	 
+	 
+	 
+	 
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
@@ -388,3 +532,5 @@
 </body>
 
 </html>
+
+ 
