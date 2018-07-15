@@ -38,7 +38,7 @@
 		<h2 style="padding-left:4%; display:inline-block;">Open Events</h2>
 		<button id="CheckInButton" class="button" style="height:50px; width:170px; float:right; border-radius:6px; margin-right:2%; margin-top:6px;">Create New Event</button>
 		<hr/>
-		<div class="flex-container">
+		<div class="flex-container" id="EventsParent">
 			<div id="EventModel">
 				<br/>
 				<p id="EventName" style="font-size:24px;">Event Name</p> 
@@ -51,9 +51,10 @@
 					<div id="Interested" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Interested:5</div>
 				</div>
  				<div style="width:200px; height:20%;">
-					<button id="ChooseButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
-					<button id="ExpandButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ExpandModal">Expand</button>
+					<button id="ChooseButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal" onclick="openModal(this)">Choose</button>
+					<button id="ExpandButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ExpandModal" onclick="openModal(this)">Expand</button>
 				</div>
+				<p id="EventID" style="display:none;"></p>
 			</div>
 		</div>
 		<div class="modal fade" id="ChooseModal" role="dialog">
@@ -101,7 +102,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm()">Confirm</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm(sendChanges)">Confirm</button>
 						<button type="button" class="btn btn-default" onclick="reset()">Reset</button>
 					</div>
 				</div>
@@ -119,20 +120,21 @@
 							<div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
 							<div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
 						</div>
+						<p id="ModalEventDescription">Event Description</p>
 						<br/>
 						<div class="dropdown">
 							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Assigned Volunteers
 							<span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="#">Jane Doe | jane.doe@gmail.com</a></li>
+							<ul class="dropdown-menu" id="AssignedDropDownGroup">
+								<li id="AssignedDropDown"><a href="#">Jane Doe | jane.doe@gmail.com</a></li>
 							</ul>
 						</div>
 						<br/><br/>
 						<div class="dropdown">
 							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Interested Volunteers
 							<span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="#">Richard Roe | richard.roe@gmail.com</a></li>
+							<ul class="dropdown-menu" id="InterestedDropDownGroup">
+								<li id="InterestedDropDown"><a href="#">Richard Roe | richard.roe@gmail.com</a></li>
 							</ul>
 						</div>
 						<br/><br/>
@@ -150,9 +152,29 @@
 		var AssignedObjectsNow;
 		var InterestedObjectsNow;
 
+		var volunteers;
+		var events;
+
 		function fillContent() {
-			// getData(fillEvents);
-			fillEvents();
+			getData(fillEvents);
+		}
+
+		function getVolunteerData() {
+			var xmlhttp = new XMLHttpRequest();
+	        xmlhttp.onreadystatechange = function() {
+	            if (this.readyState == 4 && this.status == 200) {
+	                volunteers = this.responseText;
+	            }
+	        }
+	        xmlhttp.open("GET", "", true); // get volunteer data
+	        xmlhttp.send();
+		}
+
+		function openModal() {
+			getVolunteerData(populateModals);
+		}
+
+		function populateModals() {
 			fillInterestedList();
 			fillAssignedList();
 		}
@@ -164,14 +186,26 @@
 	                events = this.responseText;
 	            }
 	        }
-	        xmlhttp.open("GET", "gethint.php?q=events_admin", true);
+	        xmlhttp.open("GET", "events.php", true); // get event data
+	        xmlhttp.send();
+		}
+
+		function sendChanges() {
+			var xmlhttp = new XMLHttpRequest();
+	        xmlhttp.onreadystatechange = function() {
+	            if (this.readyState == 4 && this.status == 200) {
+	                events = this.responseText;
+	            }
+	        }
+	        xmlhttp.open("GET", "changes.php?assigned[]=assigned&interested[]=interested", true); // get success/failure status in updating
 	        xmlhttp.send();
 		}
 
 		function fillEvents() {
-                var eventsJSON = '{"events":[{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"},{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"}]}';
+                var eventsJSON = '{"events":[{"eventID":"9876543210", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"},{"eventID":"9875678909", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"}]}';
                 var eventsObjects = JSON.parse(eventsJSON);
                 var eventModel = document.getElementById("EventModel");
+                document.getElementById("EventsParent").innerHTML = eventModel.outerHTML;
                 for(eventNo in eventsObjects.events) {
                 	var event = eventsObjects.events[eventNo];
                 	if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.assigned == null || event.interested == null)){
@@ -180,19 +214,22 @@
                 			eventModel.children[2].children[1].innerHTML = event.eventTime;
                 			eventModel.children[3].children[0].innerHTML = "Assigned: " + event.assigned;
                 			eventModel.children[3].children[1].innerHTML = "Interested: " + event.interested;
+                			eventModel.children[5].innerHTML = event.eventID;
                 			var newEvent = eventModel.cloneNode(true);
-                			newEvent.setAttribute("id", "Event"+);
+                			newEvent.setAttribute("id", "Event"+eventNo);
                 			newEvent.style.display = "initial";
-                			eventModel.parentElement.appendChild(newEvent);
+                			document.getElementById('EventsParent').appendChild(newEvent);
                 	}
                 }
-                eventModel.remove();
+                document.getElementById("EventModel").style.display = "none";
 		}
 
 		function fillInterestedList() {
 			 var volunteersJSON = '{"volunteers":[{"name":"Jane Doe","email":"jane.doe@gmail.com"},{"name":"Richard Roe","email":"richard.roe@gmail.com"}]}';
 			 var volunteersObjects = JSON.parse(volunteersJSON);
+
 			 var interestedModel = document.getElementById("InterestedData");
+			 document.getElementById("InterestedList").innerHTML = interestedModel.outerHTML;
 			 for(volunteerNo in volunteersObjects.volunteers) {
 			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
 			 	if(!(volunteer.name == null || volunteer.email == null)) {
@@ -201,17 +238,32 @@
 			 		var newVolunteer = interestedModel.cloneNode(true);
 			 		newVolunteer.setAttribute("id", "InterestedData"+volunteerNo);
 			 		newVolunteer.style.display = "initial";
-			 		interestedModel.parentElement.appendChild(newVolunteer);
+			 		document.getElementById("InterestedList").appendChild(newVolunteer);
 			 	}
 			 }
-			 interestedModel.remove();
+			 document.getElementById("InterestedData").style.display = "none";
 			 InterestedObjectsNow = volunteersObjects;
+
+			 var interestedDropDown = document.getElementById("InterestedDropDown");
+			 document.getElementById("InterestedDropDownGroup").innerHTML = interestedDropDown.outerHTML;
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		interestedDropDown.children[0].innerHTML = volunteer.name+" | "+volunteer.email;
+			 		var newItem = interestedDropDown.cloneNode(true);
+			 		newItem.setAttribute("id", "InterestedDropDown"+volunteerNo);
+			 		newItem.style.display = "initial";
+			 		document.getElementById("InterestedDropDownGroup").appendChild(newItem);
+			 	}
+			 }
+			 document.getElementById("InterestedDropDown").style.display = "none";
 		}
 
 		function fillAssignedList() {
 			var volunteersJSON = '{"volunteers":[{"name":"John Smith","email":"john.smith@gmail.com"},{"name":"Jane Roe","email":"jane.roe@gmail.com"}]}';
 			 var volunteersObjects = JSON.parse(volunteersJSON);
 			 var assignedModel = document.getElementById("AssignedData");
+			 document.getElementById("AssignedList").innerHTML = assignedModel.outerHTML;
 			 for(volunteerNo in volunteersObjects.volunteers) {
 			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
 			 	if(!(volunteer.name == null || volunteer.email == null)) {
@@ -221,11 +273,25 @@
 			 		var newVolunteer = assignedModel.cloneNode(true);
 			 		newVolunteer.setAttribute("id", "AssignedData"+volunteerNo);
 			 		newVolunteer.style.display = "initial";
-			 		assignedModel.parentElement.appendChild(newVolunteer);
+			 		document.getElementById("AssignedList").appendChild(newVolunteer);
 			 	}
 			 }
-			 assignedModel.remove();
+			 document.getElementById("AssignedData").style.display = "none";
 			 AssignedObjectsNow = volunteersObjects;
+
+			 var assignedDropDown = document.getElementById("AssignedDropDown");
+			 document.getElementById("AssignedDropDownGroup").innerHTML = assignedDropDown.outerHTML;
+			 for(volunteerNo in volunteersObjects.volunteers) {
+			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
+			 	if(!(volunteer.name == null || volunteer.email == null)) {
+			 		assignedDropDown.children[0].innerHTML = volunteer.name+" | "+volunteer.email;
+			 		var newItem = assignedDropDown.cloneNode(true);
+			 		newItem.setAttribute("id", "AssignedDropDown"+volunteerNo);
+			 		newItem.style.display = "initial";
+			 		document.getElementById("AssignedDropDownGroup").appendChild(newItem);
+			 	}
+			 }
+			 document.getElementById("AssignedDropDown").style.display = "none";
 		}
 
 		function CancelAssigned(element) {
@@ -272,14 +338,15 @@
 		function reset() {
 			var AssignedList = document.getElementById('AssignedList');
 			var InterestedList = document.getElementById('InterestedList');
-			for(assignedNo = 0; assignedNo < AssignedList.children.length; assignedNo++) {
+			for(assignedNo = 0; assignedNo < AssignedList.children.length-1; assignedNo++) {
 				var object = document.getElementById("AssignedData"+assignedNo);
+				console.log(object);
 				if(object.dataset.selected == "false") {
 					object.style.color = "#000";
 					object.setAttribute("data-selected", "true");	
 				}
 			}
-			for(interestedNo = 0; interestedNo < InterestedList.children.length; interestedNo++) {
+			for(interestedNo = 0; interestedNo < InterestedList.children.length-1; interestedNo++) {
 				var object = document.getElementById("InterestedData"+interestedNo);
 				if(object.dataset.selected == "true") {
 					object.style.color = "#000"

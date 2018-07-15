@@ -12,7 +12,6 @@
 		  flex-wrap: wrap;
 		  align-items: center;
 		  justify-content: center;
-		  background-color: DodgerBlue;
 		}
 
 		.flex-container > div {
@@ -37,7 +36,7 @@
 	</style>
 	<body style="padding:20px;" onload="fillContent()">
 		<p id="VolunteerID" style="display:none;"></p>
-		<div class="flex-container">
+		<div class="flex-container" id="EventParent">
 			<div id="EventModel">
 				<br/>
 				<p id="EventName" style="font-size:24px;">Event Name</p> 
@@ -51,15 +50,15 @@
 				</div>
  				<div style="width:200px; height:20%;">
 					<button id="CheckInButton" class="button" onclick="checkin(document.getElementById('EventID').innerHTML, document.getElementById("VolunteerID").innerHTML)">Check In</button>
-					<button id="DropButton" class="button" onclick="drop(document.getElementById('EventID').innerHTML,document.getElementById("VolunteerID").innerHTMLDrop</button>
+					<button id="DropButton" class="button" onclick="drop(document.getElementById('EventID').innerHTML,document.getElementById("VolunteerID").innerHTML)">Drop</button>
 				</div>
 			</div>
 		</div>
-		<form id="CheckinForm" method="post" action="">
+		<form id="CheckinForm" method="post" action="" style="display:none;">
 			<input type="text" id="CheckinEventID" name="eventID" value=""/>
 			<input type="text" id="CheckinVolunteerID" name="volunteerID" value=""/>
 		</form>
-		<form id="DropForm" method="post" action="">
+		<form id="DropForm" method="post" action="" style="display:none;">
 			<input type="text" id="DropEventID" name="eventID" value=""/>
 			<input type="text" id="DropVolunteerID" name="volunteerID" value=""/>
 		</form>
@@ -67,8 +66,8 @@
 	<script type="text/javascript">
 		var events;
 		function fillContent() {
-			// getData(fillEvents);
-			fillEvents();
+			getData(fillEvents);
+			// fillEvents();
 		}
 
 		function getData() {
@@ -88,6 +87,7 @@
                 var eventsJSON = '{"events":[{"eventID":"9876543210", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"47.5"},{"eventID":"9875678909", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","progress":"85.5"}]}';
                 var eventsObjects = JSON.parse(eventsJSON);
                 var eventModel = document.getElementById("EventModel");
+                document.getElementById("EventParent").innerHTML = eventModel.outerHTML;
                 for(eventNo in eventsObjects.events) {
                 	var event = eventsObjects.events[eventNo];
                 	if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.progress == null)){
@@ -95,12 +95,13 @@
                 			eventModel.children[2].children[0].innerHTML = event.eventLocation;
                 			eventModel.children[2].children[1].innerHTML = event.eventTime;
                 			eventModel.children[3].innerHTML = event.eventID;
+                			eventModel.children[4].children[0].setAttribute("value", event.progress);
                 			var newEvent = eventModel.cloneNode(true);
                 			newEvent.style.display = "initial"
-                			eventModel.parentElement.appendChild(newEvent);
+                			document.getElementById("EventParent").appendChild(newEvent);
                 	}
                 }
-                eventModel.remove();
+                document.getElementById("EventModel").remove();
 		}
 
 		function checkin(EventID, VolunteerID) {
