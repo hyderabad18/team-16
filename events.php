@@ -1,18 +1,20 @@
 <?php 
 include('connection.php');
 header("Access-Control-Allow-Origin: *");
-
+echo $_GET['q'];  
 // 
-/*if (isset($_POST[''])) {
+if (isset($_POST[''])) {
   // receive all input values from the form
   $ename = mysqli_real_escape_string($db, $_POST['EName']);
   $eid = mysqli_real_escape_string($db, $_POST['Eid']);
   $edesc= mysqli_real_escape_string($db, $_POST['Edescription']);
   $epincode = mysqli_real_escape_string($db, $_POST['Epincode']);
+  $totalcheckins=mysqli_real_escape_string($db, $_POST['Totalcheckins']);
+  
   
 //inserting in to datbase
   	$query = "INSERT INTO events
-  			  VALUES('$EName', '$Eid', '$Edescription','$Epincode ')";
+  			  VALUES('$EName', '$Eid', '$Edescription','$Epincode')";
 	mysqli_query($db,$query);
 //selecting from database
 */
