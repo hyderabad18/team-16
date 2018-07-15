@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8"><!DOCTYPE html>
-<html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +21,6 @@
 		  flex-wrap: wrap;
 		  align-items: center;
 		  justify-content: center;
-		  background-color: DodgerBlue;
 		}
 
 		.flex-container > div {
@@ -56,7 +50,7 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top" id="mainNav">
 	<img src="download.jpg" class="img-responsive" alt="" height="3%" width="3%">&nbsp;&nbsp;&nbsp;
-    <a class="navbar-brand" href="layout.html">YOUTH FOR SEVA </a>
+    <a class="navbar-brand" href="admin layout.html">YOUTH FOR SEVA </a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -65,30 +59,44 @@
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion" style="overflow-y:auto;" height='100%'>
 	  
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="admin layout.html">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Events">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+          <a class="nav-link" href="integrationevents.html" >
             <i class="fa fa-users"></i>
             <span class="nav-link-text">Events</span>
           </a>	
          
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Choose" onclick="document.getElementById('ChooseModal').modal('show')">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="adminevents.html" data-parent="#exampleAccordion" >
+		
+		
+		
+		<!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="indexnew.html">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>-->
+		
+		
+		
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Choose">
+          <a class="nav-link" href="adminevents.html" >
             <i class="fa fa-futbol-o"></i>
             <span class="nav-link-text">Choose</span>
-          </a>
-        
+          </a>	
+         
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Notify">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-handshake-o"></i>
+          <a class="nav-link" href="adminevents.html" >
+            <i class="fa fa-users"></i>
             <span class="nav-link-text">Notify</span>
-          </a>
+          </a>	
+         
+        </li>
           <!--<ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
               <a href="#">Cultivate Right Attitude</a>
@@ -120,19 +128,14 @@
               <a href="#">Eligibility for Placements</a>
             </li>
           </ul>-->
-        </li>
+        
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Edit">
           <a class="nav-link" href="">
             <i class="fa fa-fw fa-user-circle"></i>
             <span class="nav-link-text">Edit</span>
           </a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="My Journey">
-          <a class="nav-link" href="">
-            <i class="fa fa-fw fa-road"></i>
-            <span class="nav-link-text">My Journey</span>
-          </a>
-        </li>
+		
 	<!--	<li class="nav-item" data-toggle="tooltip" data-placement="right" title="departmentmaster">
           <a class="nav-link" href="departmentmaster.html">
             <i class="fa fa-fw fa-file-text"></i>
@@ -259,7 +262,7 @@
 
 	 
 	 
-	 <div class="flex-container">
+	 <div class="flex-container" id="EventParent">
 			<div id="EventModel">
 				<br/>
 				<p id="EventName" style="font-size:24px;">Event Name</p> 
@@ -272,9 +275,10 @@
 					<div id="Interested" style="width:45%; height:100%; display:inline-block; padding-top:4px;">Interested:5</div>
 				</div>
  				<div style="width:200px; height:20%;">
-					<button id="ChooseButton" class="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal">Choose</button>
-					<button id="ExpandButton" class="button">Expand</button>
+					<button id="ChooseButton" class="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#ChooseModal" onclick="openModal(this)">Choose</button>
+					<button id="ExpandButton" class="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ExpandModal" onclick="openModal(this)">Expand</button>
 				</div>
+        <p id="EventID" style="display:none;"></p>
 			</div>
 		</div>
 		<div class="modal fade" id="ChooseModal" role="dialog">
@@ -322,167 +326,258 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm()">Confirm</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="confirm(sendChanges)">Confirm</button>
 						<button type="button" class="btn btn-default" onclick="reset()">Reset</button>
 					</div>
 				</div>
 			</div>
 		</div>
+    <div class="modal fade" id="ExpandModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 id="ModalEventName" class="modal-title">Event Name</h4>
+          </div>
+          <div class="modal-body">
+            <div style="width:100%;">
+              <div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
+              <div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
+            </div>
+            <p id="ModalEventDescription">Event Description</p>
+            <br/>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Assigned Volunteers
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu" id="AssignedDropDownGroup">
+                <li id="AssignedDropDown"><a href="#">Jane Doe | jane.doe@gmail.com</a></li>
+              </ul>
+            </div>
+            <br/><br/>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Interested Volunteers
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu" id="InterestedDropDownGroup">
+                <li id="InterestedDropDown"><a href="#">Richard Roe | richard.roe@gmail.com</a></li>
+              </ul>
+            </div>
+            <br/><br/>
+            <progress id="ProgressBar" value="22" max="100"></progress>
+            <br/><br/>
+          </div>
+        </div>
+      </div>
 	</body>
 	<script type="text/javascript">
-		var assigned = [];
-		var interested = [];
+    var assigned = [];
+    var interested = [];
 
-		var AssignedObjectsNow;
-		var InterestedObjectsNow;
+    var AssignedObjectsNow;
+    var InterestedObjectsNow;
 
-		function fillContent() {
+    var volunteers;
+    var events;
 
-			getData();
+    function fillContent() {
+      getData(fillEvents);
+    }
 
-			// getData(fillEvents);
-			fillEvents();
-			fillInterestedList();
-			fillAssignedList();
+    function getVolunteerData() {
+      var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  volunteers = this.responseText;
+              }
+          }
+          xmlhttp.open("GET", "", true); // get volunteer data
+          xmlhttp.send();
+    }
 
-		}
+    function openModal() {
+      getVolunteerData(populateModals);
+    }
 
-		function getData() {
-			var xmlhttp = new XMLHttpRequest();
-	        xmlhttp.onreadystatechange = function() {
-	            if (this.readyState == 4 && this.status == 200) {
-	                console.log(this.responseText);
-	            }
-	        }
-	        xmlhttp.open("GET", "events.php", true);
-	        xmlhttp.send();
-			
-		}
+    function populateModals() {
+      fillInterestedList();
+      fillAssignedList();
+    }
 
-		function fillEvents() {
-                var eventsJSON = '{"events":[{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"},{"eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"}]}';
+    function getData() {
+      var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  events = this.responseText;
+              }
+          }
+          xmlhttp.open("GET", "events.php", true); // get event data
+          xmlhttp.send();
+    }
+
+    function sendChanges() {
+      var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  events = this.responseText;
+              }
+          }
+          xmlhttp.open("GET", "changes.php?assigned[]=assigned&interested[]=interested", true); // get success/failure status in updating
+          xmlhttp.send();
+    }
+
+    function fillEvents() {
+                var eventsJSON = '{"events":[{"eventID":"9876543210", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"},{"eventID":"9875678909", "eventName":"Event Name","eventLocation":"Location","eventTime":"Time","assigned":"2","interested":"5"}]}';
                 var eventsObjects = JSON.parse(eventsJSON);
                 var eventModel = document.getElementById("EventModel");
+                document.getElementById("EventsParent").innerHTML = eventModel.outerHTML;
                 for(eventNo in eventsObjects.events) {
-                	var event = eventsObjects.events[eventNo];
-                	if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.assigned == null || event.interested == null)){
-                			eventModel.children[1].innerHTML = event.eventName;
-                			eventModel.children[2].children[0].innerHTML = event.eventLocation;
-                			eventModel.children[2].children[1].innerHTML = event.eventTime;
-                			eventModel.children[3].children[0].innerHTML = event.assigned;
-                			eventModel.children[3].children[1].innerHTML = event.interested;
-                			var newEvent = eventModel.cloneNode(true);
-                			newEvent.style.display = "initial";
-                			eventModel.parentElement.appendChild(newEvent);
-                	}
+                  var event = eventsObjects.events[eventNo];
+                  if(!(event.eventName == null || event.eventLocation == null || event.eventTime == null || event.assigned == null || event.interested == null)){
+                      eventModel.children[1].innerHTML = event.eventName;
+                      eventModel.children[2].children[0].innerHTML = event.eventLocation;
+                      eventModel.children[2].children[1].innerHTML = event.eventTime;
+                      eventModel.children[3].children[0].innerHTML = "Assigned: " + event.assigned;
+                      eventModel.children[3].children[1].innerHTML = "Interested: " + event.interested;
+                      eventModel.children[5].innerHTML = event.eventID;
+                      var newEvent = eventModel.cloneNode(true);
+                      newEvent.setAttribute("id", "Event"+eventNo);
+                      newEvent.style.display = "initial";
+                      document.getElementById('EventsParent').appendChild(newEvent);
+                  }
                 }
-                eventModel.remove();
-		}
+                document.getElementById("EventModel").style.display = "none";
+    }
 
-		function fillInterestedList() {
-			 var volunteersJSON = '{"volunteers":[{"name":"Jane Doe","email":"jane.doe@gmail.com"},{"name":"Richard Roe","email":"richard.roe@gmail.com"}]}';
-			 var volunteersObjects = JSON.parse(volunteersJSON);
-			 var interestedModel = document.getElementById("InterestedData");
-			 for(volunteerNo in volunteersObjects.volunteers) {
-			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
-			 	if(!(volunteer.name == null || volunteer.email == null)) {
-			 		interestedModel.children[0].children[0].innerHTML = volunteer.name;
-			 		interestedModel.children[0].children[1].innerHTML = volunteer.email;
-			 		var newVolunteer = interestedModel.cloneNode(true);
-			 		newVolunteer.setAttribute("id", "InterestedData"+volunteerNo);
-			 		newVolunteer.style.display = "initial";
-			 		interestedModel.parentElement.appendChild(newVolunteer);
-			 	}
-			 }
-			 interestedModel.remove();
-			 InterestedObjectsNow = volunteersObjects;
-		}
+    function fillInterestedList() {
+       var volunteersJSON = '{"volunteers":[{"name":"Jane Doe","email":"jane.doe@gmail.com"},{"name":"Richard Roe","email":"richard.roe@gmail.com"}]}';
+       var volunteersObjects = JSON.parse(volunteersJSON);
 
-		function fillAssignedList() {
-			var volunteersJSON = '{"volunteers":[{"name":"John Smith","email":"john.smith@gmail.com"},{"name":"Jane Roe","email":"jane.roe@gmail.com"}]}';
-			 var volunteersObjects = JSON.parse(volunteersJSON);
-			 var assignedModel = document.getElementById("AssignedData");
-			 for(volunteerNo in volunteersObjects.volunteers) {
-			 	var volunteer = volunteersObjects.volunteers[volunteerNo];
-			 	if(!(volunteer.name == null || volunteer.email == null)) {
-			 		assigned.push(volunteer);
-			 		assignedModel.children[0].children[0].innerHTML = volunteer.name;
-			 		assignedModel.children[0].children[1].innerHTML = volunteer.email;
-			 		var newVolunteer = assignedModel.cloneNode(true);
-			 		newVolunteer.setAttribute("id", "AssignedData"+volunteerNo);
-			 		newVolunteer.style.display = "initial";
-			 		assignedModel.parentElement.appendChild(newVolunteer);
-			 	}
-			 }
-			 assignedModel.remove();
-			 AssignedObjectsNow = volunteersObjects;
-		}
+       var interestedModel = document.getElementById("InterestedData");
+       document.getElementById("InterestedList").innerHTML = interestedModel.outerHTML;
+       for(volunteerNo in volunteersObjects.volunteers) {
+        var volunteer = volunteersObjects.volunteers[volunteerNo];
+        if(!(volunteer.name == null || volunteer.email == null)) {
+          interestedModel.children[0].children[0].innerHTML = volunteer.name;
+          interestedModel.children[0].children[1].innerHTML = volunteer.email;
+          var newVolunteer = interestedModel.cloneNode(true);
+          newVolunteer.setAttribute("id", "InterestedData"+volunteerNo);
+          newVolunteer.style.display = "initial";
+          document.getElementById("InterestedList").appendChild(newVolunteer);
+        }
+       }
+       document.getElementById("InterestedData").style.display = "none";
+       InterestedObjectsNow = volunteersObjects;
 
-		function CancelAssigned(element) {
-			if(element.getAttribute("data-selected") == "true") {
-				element.style.color = "#d00";
-				element.setAttribute("data-selected", "false");
-			}
-			else {
-				element.style.color = "#000000";
-				element.setAttribute("data-selected", "true");
-			}
-		}
+       var interestedDropDown = document.getElementById("InterestedDropDown");
+       document.getElementById("InterestedDropDownGroup").innerHTML = interestedDropDown.outerHTML;
+       for(volunteerNo in volunteersObjects.volunteers) {
+        var volunteer = volunteersObjects.volunteers[volunteerNo];
+        if(!(volunteer.name == null || volunteer.email == null)) {
+          interestedDropDown.children[0].innerHTML = volunteer.name+" | "+volunteer.email;
+          var newItem = interestedDropDown.cloneNode(true);
+          newItem.setAttribute("id", "InterestedDropDown"+volunteerNo);
+          newItem.style.display = "initial";
+          document.getElementById("InterestedDropDownGroup").appendChild(newItem);
+        }
+       }
+       document.getElementById("InterestedDropDown").style.display = "none";
+    }
 
-		function SelectInterested(element) {
-			if(element.getAttribute("data-selected") == "true") {
-				element.style.color = "#000000";
-				element.setAttribute("data-selected", "false");
-			}
-			else {
-				element.style.color = "#0d0";
-				element.setAttribute("data-selected", "true");
-			}
-		}
+    function fillAssignedList() {
+      var volunteersJSON = '{"volunteers":[{"name":"John Smith","email":"john.smith@gmail.com"},{"name":"Jane Roe","email":"jane.roe@gmail.com"}]}';
+       var volunteersObjects = JSON.parse(volunteersJSON);
+       var assignedModel = document.getElementById("AssignedData");
+       document.getElementById("AssignedList").innerHTML = assignedModel.outerHTML;
+       for(volunteerNo in volunteersObjects.volunteers) {
+        var volunteer = volunteersObjects.volunteers[volunteerNo];
+        if(!(volunteer.name == null || volunteer.email == null)) {
+          assigned.push(volunteer);
+          assignedModel.children[0].children[0].innerHTML = volunteer.name;
+          assignedModel.children[0].children[1].innerHTML = volunteer.email;
+          var newVolunteer = assignedModel.cloneNode(true);
+          newVolunteer.setAttribute("id", "AssignedData"+volunteerNo);
+          newVolunteer.style.display = "initial";
+          document.getElementById("AssignedList").appendChild(newVolunteer);
+        }
+       }
+       document.getElementById("AssignedData").style.display = "none";
+       AssignedObjectsNow = volunteersObjects;
 
-		function confirm() {
-			var AssignedList = document.getElementById('AssignedList');
-			var InterestedList = document.getElementById('InterestedList');
-			for(assignedNo in AssignedList.children-1) {
-				var assigned = AssignedList.children[assignedNo];
-				if(assigned.getAttribute('data-selected') == "true")
-					assigned.push(AssignedObjectsNow[assignedNo]);
-				else
-					interested.push(AssignedObjectsNow[assignedNo]);
-			}
-			for(interestedNo in InterestedList.children-1) {
-				var interested = InterestedList.children[interestedNo];
-				if(interested.getAttribute('data-selected') == "false")
-					interested.push(InterestedObjectsNow[interestedNo]);
-				else
-					assigned.push(InterestedObjectsNow[interestedNo]);
-			}
-		}
+       var assignedDropDown = document.getElementById("AssignedDropDown");
+       document.getElementById("AssignedDropDownGroup").innerHTML = assignedDropDown.outerHTML;
+       for(volunteerNo in volunteersObjects.volunteers) {
+        var volunteer = volunteersObjects.volunteers[volunteerNo];
+        if(!(volunteer.name == null || volunteer.email == null)) {
+          assignedDropDown.children[0].innerHTML = volunteer.name+" | "+volunteer.email;
+          var newItem = assignedDropDown.cloneNode(true);
+          newItem.setAttribute("id", "AssignedDropDown"+volunteerNo);
+          newItem.style.display = "initial";
+          document.getElementById("AssignedDropDownGroup").appendChild(newItem);
+        }
+       }
+       document.getElementById("AssignedDropDown").style.display = "none";
+    }
 
-		function reset() {
-			var AssignedList = document.getElementById('AssignedList');
-			var InterestedList = document.getElementById('InterestedList');
-			for(assignedNo = 0; assignedNo < AssignedList.children.length; assignedNo++) {
-				var object = document.getElementById("AssignedData"+assignedNo);
-				if(object.dataset.selected == "false") {
-					object.style.color = "#000";
-					object.setAttribute("data-selected", "true");	
-				}
-			}
-			for(interestedNo = 0; interestedNo < InterestedList.children.length; interestedNo++) {
-				var object = document.getElementById("InterestedData"+interestedNo);
-				if(object.dataset.selected == "true") {
-					object.style.color = "#000"
-					object.setAttribute("data-selected", "false");
-				}
-			}
-		}
-	</script>
-	 
-	 
-	 
-	 
+    function CancelAssigned(element) {
+      if(element.getAttribute("data-selected") == "true") {
+        element.style.color = "#d00";
+        element.setAttribute("data-selected", "false");
+      }
+      else {
+        element.style.color = "#000000";
+        element.setAttribute("data-selected", "true");
+      }
+    }
 
+    function SelectInterested(element) {
+      if(element.getAttribute("data-selected") == "true") {
+        element.style.color = "#000000";
+        element.setAttribute("data-selected", "false");
+      }
+      else {
+        element.style.color = "#0d0";
+        element.setAttribute("data-selected", "true");
+      }
+    }
+
+    function confirm() {
+      var AssignedList = document.getElementById('AssignedList');
+      var InterestedList = document.getElementById('InterestedList');
+      for(assignedNo in AssignedList.children-1) {
+        var assigned = AssignedList.children[assignedNo];
+        if(assigned.getAttribute('data-selected') == "true")
+          assigned.push(AssignedObjectsNow[assignedNo]);
+        else
+          interested.push(AssignedObjectsNow[assignedNo]);
+      }
+      for(interestedNo in InterestedList.children-1) {
+        var interested = InterestedList.children[interestedNo];
+        if(interested.getAttribute('data-selected') == "false")
+          interested.push(InterestedObjectsNow[interestedNo]);
+        else
+          assigned.push(InterestedObjectsNow[interestedNo]);
+      }
+    }
+
+    function reset() {
+      var AssignedList = document.getElementById('AssignedList');
+      var InterestedList = document.getElementById('InterestedList');
+      for(assignedNo = 0; assignedNo < AssignedList.children.length-1; assignedNo++) {
+        var object = document.getElementById("AssignedData"+assignedNo);
+        console.log(object);
+        if(object.dataset.selected == "false") {
+          object.style.color = "#000";
+          object.setAttribute("data-selected", "true"); 
+        }
+      }
+      for(interestedNo = 0; interestedNo < InterestedList.children.length-1; interestedNo++) {
+        var object = document.getElementById("InterestedData"+interestedNo);
+        if(object.dataset.selected == "true") {
+          object.style.color = "#000"
+          object.setAttribute("data-selected", "false");
+        }
+      }
+    }
+  </script>
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
