@@ -262,7 +262,7 @@
 
 	 
 	 
-	 <div class="flex-container" id="EventParent">
+	 <div class="flex-container" id="EventsParent">
 			<div id="EventModel">
 				<br/>
 				<p id="EventName" style="font-size:24px;">Event Name</p> 
@@ -285,8 +285,8 @@
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
+            <h4 id="ModalEventName" class="modal-title">Event Name</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 id="ModalEventName" class="modal-title">Event Name</h4>
 					</div>
 					<div class="modal-body">
 						<div style="width:100%;">
@@ -336,15 +336,15 @@
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 id="ModalEventName" class="modal-title">Event Name</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
             <div style="width:100%;">
               <div id="ModalEventLocation" style="width:45%; display:inline-block; padding-top:4px;">Location</div>
               <div id="ModalEventTime" style="width:45%; display:inline-block; padding-top:4px;">Time</div>
             </div>
-            <p id="ModalEventDescription">Event Description</p>
+            <p id="ModalEventDescription" style="font-weight:600; margin-top:20px;">Event Description</p>
             <br/>
             <div class="dropdown">
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Assigned Volunteers
@@ -379,7 +379,8 @@
     var events;
 
     function fillContent() {
-      getData(fillEvents);
+      // getData(fillEvents);
+      fillEvents();
     }
 
     function getVolunteerData() {
@@ -394,7 +395,8 @@
     }
 
     function openModal() {
-      getVolunteerData(populateModals);
+      // getVolunteerData(populateModals);
+      populateModals();
     }
 
     function populateModals() {
