@@ -27,7 +27,7 @@ while($row=mysqli_fetch_assoc($result))
 	$json_array[]=$row;
 }
 echo json_encode($json_array);
-
+//{"EName":"education","Eid":"1","Edescription":"needed for differently abled","Epincode":"405"},{"EName":"education","Eid":"2","Edescription":"needed for youth","Epincode":"405"},{"EName":"environment","Eid":"3","Edescription":"informs about eco friendly solutions","Epincode":"409"}]
 
 
 ?>
