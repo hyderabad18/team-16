@@ -10,7 +10,7 @@ if (isset($_POST[''])) {
   mysqli_query($db,$query);
   //inserting in to datbase
   	$query = "INSERT INTO event_vol_map
-  			  VALUES('$	EName', '$ Eid', '$Edescription ','$Epincode')";
+  			  VALUES('$vid','$eid', '$Tid')";
 	mysqli_query($db,$query);
 //selecting from database
 $query1="select * from event_vol_map ";
